@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>knn | Portafolio Fullstack</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: hsl(97, 100%, 82%);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* contenedor minimalista */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* tipografía técnica y sobria */
+    h1, h2, h3 {
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 60%, #8b8b9b 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #f63b92;
+      padding-left: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1e1e2a;
+      color: #b9c3cf;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-family: 'Fira Code', monospace;
+      letter-spacing: -0.2px;
+    }
+
+    /* header minimal */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #624776;
+      padding-bottom: 1rem;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.25rem;
+      letter-spacing: -0.3px;
+    }
+
+    .logo span {
+      color: #ae3bf6;
+      font-weight: 500;
+    }
+
+    .nav a {
+      color: #c0b0c5;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover {
+      color: white;
+    }
+
+    /* hero sección */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      max-width: 720px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .tech-item {
+      background: #15151c;
+      padding: 0.3rem 1rem;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-family: monospace;
+      color: #edcdf4;
+    }
+
+    /* proyecto destacado */
+    .proyecto-destacado {
+      background: #111116;
+      border: 1px solid #25252f;
+      border-radius: 28px;
+      padding: 2rem;
+      margin: 2.5rem 0 2rem;
+      transition: all 0.2s ease;
+    }
+
+    .proyecto-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .proyecto-nombre {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+    }
+
+    .proyecto-links a {
+      color: #986ca3;
+      text-decoration: none;
+      border-bottom: 1px solid #2c3e4e;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+    }
+
+    .proyecto-links a:hover {
+      color: white;
+      border-bottom-color: #f63b8f;
+    }
+
+    .descripcion-corta {
+      margin: 1rem 0 1.2rem;
+      color: #cbd5e6;
+    }
+
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0 1rem;
+    }
+
+    .feature {
+      background: #0c0c10;
+      padding: 0.4rem 1rem;
+      border-radius: 32px;
+      font-size: 0.85rem;
+      border: 0.5px solid #262632;
+      color: #bbd0bf;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: #1e1e28;
+      margin: 2rem 0;
+    }
+
+    footer {
+      font-size: 0.8rem;
+      color: #705c69;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 2.2rem; }
+      .container { padding: 1.5rem; }
+      .nav a { margin-left: 1rem; }
+      .proyecto-nombre { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- navegación simple -->
+  <div class="header">
+    <div class="logo">knn.<span>dev</span></div>
+    <div class="nav">
+      <a href="www.linkedin.com/in/knnknn" target="_blank">LinkedIn</a>
+      <a href="https://github.com/k6n6n6?tab=repositories" target="_blank">proyectos</a>
+      <a href="https://github.com/k6n6n6" target="_blank">github</a>
+    </div>
+  </div>
+
+  <!-- hero: perfil profesional -->
+  <div class="hero">
+    <div>
+      <span class="badge">python fullstack · trainee</span>
+    </div>
+    <h1>Fabian Andres<br>Lucero Valdebenito</h1>
+    <div class="hero-sub">
+      Construyo aplicaciones web funcionales con Django, integración de datos y lógica de backend robusta. 
+      Enfoque en arquitectura limpia, validación de formularios y seguridad. 
+    </div>
+    <div class="tech-stack">
+      <span class="tech-item">Python</span>
+      <span class="tech-item">Django</span>
+      <span class="tech-item">HTML/CSS</span>
+      <span class="tech-item">JavaScript</span>
+      <span class="tech-item">MySQL</span>
+      <span class="tech-item">Git</span>
+    </div>
+  </div>
+
+  <h2>sobre mí</h2>
+  <div style="max-width: 720px; color: #9ca3af; font-size: 0.95rem;">
+    Soy desarrollador Full Stack Python en formación con enfoque en backend y desarrollo de aplicaciones web con Django.
+    <br><br>
+    He trabajado en proyectos donde implemento lógica de negocio real, autenticación de usuarios, relaciones entre modelos y manejo de transacciones.
+    <br><br>
+    Me destaco por mi capacidad de resolución de problemas, aprendizaje continuo y enfoque en escribir código claro, mantenible y seguro.
+    <br><br>
+    Actualmente busco oportunidades como desarrollador trainee o junior para seguir creciendo en entornos tecnológicos reales.
+  </div><br>
+
+  <!-- PROYECTO DESTACADO: knn_Wallet -->
+  <h2>proyecto destacado</h2>
+  <div class="proyecto-destacado">
+    <div class="proyecto-header">
+      <div class="proyecto-nombre">knn_Wallet</div>
+      <div class="proyecto-links">
+        <a href="https://github.com/k6n6n6/Proyecto-M-dulo-7-_-ABP" target="_blank">github →</a>
+      </div>
+    </div>
+    <div class="descripcion-corta">
+      Sistema bancario simulado con gestión de cuentas, transferencias atómicas, contactos frecuentes e historial de transacciones. 
+      Aplicación fullstack desarrollada con Django y MySQL.
+    </div>
+    
+    <!-- características clave -->
+    <div class="features-grid">
+      <span class="feature">autenticación segura</span>
+      <span class="feature">transacciones ACID</span>
+      <span class="feature">relaciones one-to-one</span>
+      <span class="feature">formularios personalizados</span>
+      <span class="feature">contactos automáticos</span>
+      <span class="feature">tests unitarios</span>
+    </div>
+
+    <!-- métricas / logros técnicos sin emojis -->
+    <div style="margin: 1rem 0 0 0; font-size: 0.9rem; background: #0b0b10; padding: 1rem; border-radius: 20px;">
+      <div style="color: #9aa9bb; margin-bottom: 6px;">Impacto técnico</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: 0.85rem;">
+        <div>▸ validación de saldo + operaciones atómicas</div>
+        <div>▸ generación automática de número de cuenta</div>
+        <div>▸ script de población de datos para pruebas</div>
+        <div>▸ herencia de templates y protección CSRF</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>otros proyectos</h2>
+
+  <div class="proyecto-destacado" style="margin-top: 1.5rem;">
+    <div class="proyecto-header">
+      <div class="proyecto-nombre">Gestión de Tareas</div>
+      <div class="proyecto-links">
+        <a href="TU_LINK_GITHUB" target="_blank">github →</a>
+      </div>
+    </div>
+
+    <div class="descripcion-corta">
+      Aplicación web con CRUD completo para la gestión de proyectos y tareas, incluyendo autenticación de usuarios y panel administrativo.
+    </div>
+
+    <div class="features-grid">
+      <span class="feature">CRUD completo</span>
+      <span class="feature">relaciones ORM</span>
+      <span class="feature">login/logout</span>
+      <span class="feature">django admin</span>
+    </div>
+  </div>
+
+  <!-- breve preview de lógica / estructura: muestra tu dominio ORM -->
+  <div style="margin-top: 1rem;">
+    <div style="font-size: 0.9rem; color: #adb7c4;">models.py · lógica de transferencias</div>
+    <pre style="background: #0e0e14; padding: 1rem; border-radius: 18px; overflow-x: auto; font-size: 0.8rem; margin-top: 0.5rem; border: 1px solid #22222c; font-family: monospace;">
+class Transaccion(models.Model):
+    TIPOS = [('deposito','Depósito'), ('retiro','Retiro'), ('transferencia','Transferencia')]
+    cuenta_origen = models.ForeignKey(Cuenta, on_delete=models.CASCADE, ...)
+    cuenta_destino = models.ForeignKey(Cuenta, ...)
+    monto = models.DecimalField(max_digits=12, decimal_places=2)
+    # uso de select_for_update() + atomic para consistencia financiera</pre>
+    <div class="tech-stack" style="margin-top: 12px;">
+      <span class="tech-item">Django ORM</span>
+      <span class="tech-item">transacciones atómicas</span>
+      <span class="tech-item">MySQL</span>
+    </div>
+  </div><br>
+
+  <h2>caso de estudio</h2>
+
+  <div style="max-width: 800px; font-size: 0.9rem; color: #b8c2cc;">
+    <div style="margin-bottom: 1.2rem;">
+      <strong style="color: #ffffff;">desafío</strong><br>
+      implementar un sistema de transferencias que garantice integridad de datos, validación de saldo y consistencia en operaciones concurrentes.
+    </div>
+    <div style="margin-bottom: 1.2rem;">
+      <strong style="color: #ffffff;">solución</strong><br>
+      se utilizó django ORM junto con transacciones atómicas para asegurar operaciones seguras, además de validaciones personalizadas en modelos y formularios.
+    </div>
+    <div style="margin-bottom: 1.2rem;">
+      <strong style="color: #ffffff;">aprendizajes</strong><br>
+      manejo de lógica de negocio compleja, validación de datos, diseño de modelos relacionales y control de errores en backend.
+    </div>
+    <div>
+      <strong style="color: #ffffff;">impacto</strong><br>
+      simulación exitosa de múltiples transferencias, reducción de errores y mejora en experiencia de usuario mediante contactos frecuentes.
+    </div>
+  </div><br>
+
+  <h2>habilidades</h2>
+  <div class="tech-stack">
+    <span class="tech-item">backend development</span>
+    <span class="tech-item">django ORM</span>
+    <span class="tech-item">modelado de datos</span>
+    <span class="tech-item">validación de formularios</span>
+    <span class="tech-item">lógica de negocio</span>
+    <span class="tech-item">resolución de problemas</span>
+  </div>
+  
+  <hr>  
+  <h2>contacto</h2>
+
+  <div style="font-size: 0.9rem; color: #9ca3af;">
+    <div>email: fabianlucero.693@gmail.com</div>
+    <div>linkedin: www.linkedin.com/in/knnknn</div>
+    <div>github: github.com/k6n6n6</div>
+  </div>
+
+  <footer>
+    Fabian Lucero — desarrollador fullstack en formación | diseño oscuro/minimalista
+  </footer>
+</div>
+</body>
+</html>
